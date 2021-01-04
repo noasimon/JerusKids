@@ -29,9 +29,15 @@ class _TheAppState extends State<TheApp> {
   Map<String, LatLng> coords;
   List<Marker> markers;
   List<MyItem> _items = new List<MyItem>();
+  bool _swing = false;
+  bool _slide = false;
+  bool _zero6 = false;
+  bool _six12 = false;
+  void _swingChanged(bool value) => setState(() => _swing = value);
   
   @override
   void initState(){
+    super.initState();
     mapController = new MapController();
     coords = new Map<String, LatLng>();
     
@@ -49,7 +55,7 @@ class _TheAppState extends State<TheApp> {
         )
       );
     }
-    bool _checked = false;
+    
     for (String category in ['גני ילדים','גני שעשועים']) {
        _items.add(new MyItem(
                       false,
@@ -71,19 +77,19 @@ class _TheAppState extends State<TheApp> {
                                 
                                 new CheckboxListTile (
                                   title: Text('עד 6 ילדים'),
-                                  value: _checked, 
+                                  value: _zero6, 
                                   onChanged: (bool value) {
                                     setState((){
-                                      _checked = value;
+                                      _zero6 = value;
                                     });
 
                                   }),
                                   new CheckboxListTile(
                                   title: Text('מ 6 - 12 ילדים'),
-                                  value: _checked, 
+                                  value: _six12, 
                                   onChanged: (bool value) {
                                     setState((){
-                                      _checked = value;
+                                      _six12 = value;
                                     });
                                     
                                   }),];
@@ -96,19 +102,22 @@ class _TheAppState extends State<TheApp> {
                                 new CheckboxListTile(
                                   title: Text('נדנדה'),
                                   
-                                  value: _checked, 
-                                  onChanged: (bool value) {
-                                    setState((){
-                                      _checked = value;
-                                    });
+                                  value: _swing, 
+                                  onChanged: _swingChanged,
+                                  // (bool value) {
+                                  //   setState((){
+                                  //     _swing = value;
+                                  //   }
+                                  // );
 
-                                  }),
+                                  // }
+                                  ),
                                   new CheckboxListTile(
                                   title: Text('מגלשה'),
-                                  value: _checked, 
+                                  value: _slide, 
                                   onChanged: (bool value) {
                                     setState((){
-                                      _checked = value;
+                                      _slide = value;
                                     });
                                     
                                   }),];
