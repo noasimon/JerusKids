@@ -2,11 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:latlong/latlong.dart';
+import 'package:nominatim_location_picker/nominatim_location_picker.dart';
+// import 'package:search_map_place/search_map_place.dart';
 
 void main() {
   runApp(new MaterialApp(
     home: new TheApp()
   ));
+}
+class MyItem {
+  bool isExpanded;
+  final String header;
+  final Widget body;
+
+  MyItem(this.isExpanded, this.header, this.body);
 }
 
 class TheApp extends StatefulWidget {
@@ -19,7 +28,8 @@ class _TheAppState extends State<TheApp> {
   MapController mapController;
   Map<String, LatLng> coords;
   List<Marker> markers;
-
+  List<MyItem> _items = new List<MyItem>();
+  
   @override
   void initState(){
     mapController = new MapController();
@@ -39,21 +49,102 @@ class _TheAppState extends State<TheApp> {
         )
       );
     }
+    bool _checked = false;
+    for (String category in ['גני ילדים','גני שעשועים']) {
+       _items.add(new MyItem(
+                      false,
+                      category,
+                      new Container(
+                        padding: new EdgeInsets.all(10.0),
+                        child: new Column(
+                          children: 
+                          ((){
+                            switch (category) {
+                              case 'גני ילדים':
+                              return [
+                                new Text('גני ילדים'),
+                                new Text('מספר ילדים'),
+                                
+                                new CheckboxListTile (
+                                  title: Text('עד 6 ילדים'),
+                                  value: _checked, 
+                                  onChanged: (bool value) {
+                                    setState((){
+                                      _checked = value;
+                                    });
 
-  }
+                                  }),
+                                  new CheckboxListTile(
+                                  title: Text('מ 6 - 12 ילדים'),
+                                  value: _checked, 
+                                  onChanged: (bool value) {
+                                    setState((){
+                                      _checked = value;
+                                    });
+                                    
+                                  }),];
+                                break;
+                              case 'גני שעשועים':
+                              return [
+                                new Text('גני שעשועים'),
+                                new Text('מתקנים'),
+                                // bool _checked = false;
+                                new CheckboxListTile(
+                                  title: Text('נדנדה'),
+                                  
+                                  value: _checked, 
+                                  onChanged: (bool value) {
+                                    setState((){
+                                      _checked = value;
+                                    });
 
-  void _showCoord(int index) {
-    mapController.move(coords.values.elementAt(index), 18.0);
-  }
-
-  List<Widget> _makeButtons() {
-    List<Widget> list = new List<Widget>();
-
-    for(int i = 0; i< coords.length; i++){
-      list.add(new RaisedButton(onPressed: () => _showCoord(i), child: new Text(coords.keys.elementAt(i)),));
+                                  }),
+                                  new CheckboxListTile(
+                                  title: Text('מגלשה'),
+                                  value: _checked, 
+                                  onChanged: (bool value) {
+                                    setState((){
+                                      _checked = value;
+                                    });
+                                    
+                                  }),];
+                                break;
+                              default:
+                            }}()),
+                        ),
+                      ),
+                    ),);
     }
-    return list;
+
   }
+
+  ExpansionPanel _createitem(MyItem item){
+    return new ExpansionPanel(
+      headerBuilder: (BuildContext context, bool isExpanded){
+        return new Container(
+          padding: new EdgeInsets.all(5.0),
+          child: new Text(item.header),
+
+        );
+      },
+      body: item.body,
+      isExpanded: item.isExpanded
+
+    );
+  }
+
+  // void _showCoord(int index) {
+  //   mapController.move(coords.values.elementAt(index), 18.0);
+  // }
+
+  // List<Widget> _makeButtons() {
+  //   List<Widget> list = new List<Widget>();
+
+  //   for(int i = 0; i< coords.length; i++){
+  //     list.add(new RaisedButton(onPressed: () => _showCoord(i), child: new Text(coords.keys.elementAt(i)),));
+  //   }
+  //   return list;
+  // }
 
 
   @override
@@ -61,16 +152,37 @@ class _TheAppState extends State<TheApp> {
     
     return new Scaffold(
         appBar: new AppBar(
-          title: Text('My first app'),
+          title: Text('JerusKids'),
         ), 
+        endDrawer: new Drawer(
+          child: new Container(
+            padding: new EdgeInsets.all(32.0),
+            child: new ListView(
+              children: <Widget>[
+                new ExpansionPanelList(
+                  expansionCallback: (int index, bool isExpanded) {
+                    setState(() {
+                      _items[index].isExpanded = !_items[index].isExpanded;
+                    });
+                  },
+                  children: _items.map((_createitem).toList(),)
+                   ),
+                    // new Row(
+                    //   children:
+                    //     _makeButtons(),
+                    // ),
+                new FlatButton(onPressed: () => Navigator.pop(context), child: new Text('סגור'),)
+
+              ],
+            ),
+          ),
+        ),
         body: new Container(
-          padding: new EdgeInsets.all(32.0),
+          padding: new EdgeInsets.all(0.0),
           child: new Center(
             child: new Column(
               children: <Widget>[
-                new Row(
-                  children: _makeButtons(),
-                ),
+                
                 new Flexible(
                   child: new FlutterMap(
                     mapController: mapController,
