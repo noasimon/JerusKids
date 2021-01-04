@@ -56,7 +56,11 @@ class _TheAppState extends State<TheApp> {
                       category,
                       new Container(
                         padding: new EdgeInsets.all(10.0),
-                        child: new Column(
+                        child: 
+                        new Column(
+                          // children: [
+                            // new Text('expanded'),
+                          // ],
                           children: 
                           ((){
                             switch (category) {
@@ -113,7 +117,8 @@ class _TheAppState extends State<TheApp> {
                             }}()),
                         ),
                       ),
-                    ),);
+                      ),
+                    );
     }
 
   }
@@ -165,7 +170,7 @@ class _TheAppState extends State<TheApp> {
                       _items[index].isExpanded = !_items[index].isExpanded;
                     });
                   },
-                  children: _items.map((_createitem).toList(),)
+                  children: _items.map(_createitem).toList(),
                    ),
                     // new Row(
                     //   children:
