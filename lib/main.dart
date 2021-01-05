@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:latlong/latlong.dart';
-import 'package:nominatim_location_picker/nominatim_location_picker.dart';
-// import 'package:search_map_place/search_map_place.dart';
 
 void main() {
   runApp(new MaterialApp(
@@ -59,19 +58,6 @@ class _TheAppState extends State<TheApp> {
     coords.putIfAbsent("Playground1", () => new LatLng(31.763725, 35.202158));
     coords.putIfAbsent("Playground2", () => new LatLng(31.756790, 35.203533));
     coords.putIfAbsent("Playground3", () => new LatLng(31.769325, 35.209223));
-
-    markers = new List<Marker>();
-
-    for(int i = 0; i< coords.length; i++){
-      markers.add(
-        new Marker(
-          width: 80.0,
-          height: 80.0,
-          point: coords.values.elementAt(i),
-          builder: (ctx) => new Icon(Icons.pin_drop, color: Colors.orange,),
-        )
-      );
-    }
     
     for (String category in ['גני ילדים','גני שעשועים']) {
        _items.add(new MyItem(
@@ -81,15 +67,11 @@ class _TheAppState extends State<TheApp> {
                         padding: new EdgeInsets.all(10.0),
                         child: 
                         new Column(
-                          // children: [
-                            // new Text('expanded'),
-                          // ],
                           children: 
                           ((){
                             switch (category) {
                               case 'גני ילדים':
                               return [
-                                // new Text('גני ילדים', style: TextStyle(fontSize: 24.0)),
                                 new Text('גילאים', style: TextStyle(fontSize: 20.0)),
                                 StatefulBuilder(
                                   builder: (BuildContext context, StateSetter setState) {
@@ -233,7 +215,6 @@ class _TheAppState extends State<TheApp> {
                                     setState((){
                                       _five6 = value;
                                     });
-
                                   }),
                                   );}),
                                   StatefulBuilder(
@@ -246,7 +227,6 @@ class _TheAppState extends State<TheApp> {
                                     setState((){
                                       _seven8 = value;
                                     });
-
                                   }),
                                   );}),
                                   StatefulBuilder(
@@ -260,20 +240,16 @@ class _TheAppState extends State<TheApp> {
 
                                   }),);}),
                                   ];
-                                // break;
                               case 'גני שעשועים':
                               return [
-                                // new Text('גני שעשועים'),
                                 new Text('מתקנים', style: TextStyle(fontSize: 20.0)),
-                                // bool _checked = false;
                                 StatefulBuilder(
                                   builder: (BuildContext context, StateSetter setState) {
                                     return Center(
                                       child: new CheckboxListTile(
                                   title: Text('נדנדה'),
-                                  
                                   value: _swing, 
-                                  onChanged: //_swingChanged,
+                                  onChanged: 
                                   (bool value) {
                                     setState((){
                                       _swing = value;
@@ -283,45 +259,6 @@ class _TheAppState extends State<TheApp> {
                                   }
                                   ),
                                   );}),
-                                // for (String category2 in ['נדנדה']) {
-                                //   _items2.add(new MyItem(
-                                //   false,
-                                //   category2,
-                                //   new Container(
-                                //     padding: new EdgeInsets.all(10.0),
-                                //     child: 
-                                //       new Column(
-                                //         children: 
-                                //           ((){
-                                //           switch (category2) {
-                                //             case 'נדנדה':
-                                //               return [
-                                //                 StatefulBuilder(
-                                //                   builder: (BuildContext context, StateSetter setState) {
-                                //                     return Center(
-                                //                       child: new CheckboxListTile (
-                                //                         title: Text('נדנדה בטיחותית לקטנטנים'),
-                                //                         value: _litSwing, 
-                                //                         onChanged: (bool value) {
-                                //                           setState((){
-                                //                             _little = value;
-                                //                           });
-                                //                         }),);}),
-                                //                 StatefulBuilder(
-                                //                   builder: (BuildContext context, StateSetter setState) {
-                                //                     return Center(
-                                //                       child: new CheckboxListTile(
-                                //                         title: Text('כל סוג נדנדה'),
-                                //                         value: _allSwing, 
-                                //                         onChanged: //_swingChanged,
-                                //                           (bool value) {
-                                //                             setState((){
-                                //                               _allSwing = value;
-                                //                             }
-                                //                             );
-                                //                           }
-                                //                       ),
-                                //                     );}),];}}()),),),),),},
                                   StatefulBuilder(
                                   builder: (BuildContext context, StateSetter setState) {
                                     return Center(
@@ -334,8 +271,6 @@ class _TheAppState extends State<TheApp> {
                                     });
                                     
                                   }),);}),];
-                              //   break;
-                              // default:
                             }}()),
                         ),
                       ),
@@ -343,6 +278,26 @@ class _TheAppState extends State<TheApp> {
                     );
     }
 
+    _showMarkers(_slide, _swing);
+
+  }
+  void _showMarkers(bool slide, bool swing){
+    markers = new List<Marker>();
+    bool playground1 = slide;
+    bool playground2 = slide | swing;
+    bool playground3 = slide | swing;
+    List<bool> playgrounds = [playground1, playground2, playground3];
+    for(int i = 0; i< coords.length; i++){
+      if (playgrounds[i]){
+      markers.add(
+        new Marker(
+          width: 80.0,
+          height: 80.0,
+          point: coords.values.elementAt(i),
+          builder: (ctx) => new Icon(Icons.pin_drop, color: Colors.orange,),
+        )
+      );};
+    }
   }
 
   ExpansionPanel _createitem(MyItem item){
@@ -360,20 +315,6 @@ class _TheAppState extends State<TheApp> {
     );
   }
 
-  // void _showCoord(int index) {
-  //   mapController.move(coords.values.elementAt(index), 18.0);
-  // }
-
-  // List<Widget> _makeButtons() {
-  //   List<Widget> list = new List<Widget>();
-
-  //   for(int i = 0; i< coords.length; i++){
-  //     list.add(new RaisedButton(onPressed: () => _showCoord(i), child: new Text(coords.keys.elementAt(i)),));
-  //   }
-  //   return list;
-  // }
-
-
   @override
   Widget build(BuildContext context) {
     
@@ -384,13 +325,7 @@ class _TheAppState extends State<TheApp> {
         endDrawer: new Drawer(
           child: new Container(
             padding: new EdgeInsets.all(32.0),
-            child: new ListView //.builder(
-              // shrinkWrap = True, 
-              // itemBuilder: (BuildContext context, int index){
-              //   var item = _item[index];
-              //   return ExpansionTile(
-
-                (
+            child: new ListView (
               children: <Widget>[
                 new ExpansionPanelList(
                   expansionCallback: (int index, bool isExpanded) {
@@ -400,11 +335,13 @@ class _TheAppState extends State<TheApp> {
                   },
                   children: _items.map(_createitem).toList(),
                    ),
-                    // new Row(
-                    //   children:
-                    //     _makeButtons(),
-                    // ),
-                new FlatButton(onPressed: () => Navigator.pop(context), child: new Text('סגור'),)
+                
+                new FlatButton(onPressed: () {
+                  setState(() {_showMarkers(_slide, _swing);});
+                  Navigator.pop(context); },
+                  child: new Text('סגור'),
+                
+                )
 
               ],
             ),
