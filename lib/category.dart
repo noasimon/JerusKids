@@ -17,8 +17,8 @@ class Category extends StatelessWidget {
         // body: ListView.builder(
         itemCount: data.length,
         itemBuilder: (BuildContext context, int index) => EntryItem(
-            data[index],
-          ),
+          data[index],
+        ),
       ),
       // ),
     );
@@ -29,7 +29,6 @@ class Entry {
   final String title;
   final List<Entry> children;
   Entry(this.title, [this.children = const <Entry>[]]);
-  
 }
 
 final List<Entry> data = <Entry>[
@@ -37,23 +36,26 @@ final List<Entry> data = <Entry>[
     'גני ילדים',
     kindergartens,
   ),
-  Entry(
-    'גני שעשועים',
-    playgrounds,
-  ),
+  // Entry(
+  // 'גני שעשועים',
+  // playgrounds,
+  // ),
 ];
 
 class EntryItem extends StatelessWidget {
   const EntryItem(this.entry);
   final Entry entry;
- 
+
   // This function recursively creates the multi-level list rows.
   Widget _buildTiles(Entry root) {
     if (root.children.isEmpty) {
       return ListTile(
-        title: Text(root.title, textAlign: TextAlign.right, textDirection: TextDirection.rtl,),
+        title: Text(
+          root.title,
+          textAlign: TextAlign.right,
+          textDirection: TextDirection.rtl,
+        ),
         contentPadding: EdgeInsets.only(right: 35.0),
-        
       );
     }
     return ExpansionTile(
@@ -62,7 +64,7 @@ class EntryItem extends StatelessWidget {
       children: root.children.map<Widget>(_buildTiles).toList(),
     );
   }
- 
+
   @override
   Widget build(BuildContext context) {
     return _buildTiles(entry);
@@ -72,13 +74,13 @@ class EntryItem extends StatelessWidget {
 //   @override
 //   Widget build(BuildContext context) {
 //     return Container(
-      
+
 //     );
 //   }
 // }
 
 // class Category extends StatelessWidget {
-  
+
 //   @override
 //   Widget Build(BuildContext context)  {
 //     return new Container(
@@ -86,5 +88,5 @@ class EntryItem extends StatelessWidget {
 //       child: new Text('category'),
 //     );
 //   }
-  
+
 // }
