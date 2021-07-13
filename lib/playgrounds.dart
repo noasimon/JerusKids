@@ -2,32 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:latlong/latlong.dart';
-
-// import 'package:flutter/material.dart';
 // import 'category.dart';
-
-// final List<Entry> playgrounds = <Entry>[
-//   Entry(
-//     'מתקנים',
-//     <Entry>[
-//       Entry(
-//         'נדנדות',
-//         <Entry>[
-//           Entry('נדנדות בטיחותיות לקטנטנים'),
-//           Entry('נדנדות לגדולים'),
-//         ],
-//       ),
-//       Entry(
-//         'מגלשות',
-//         <Entry>[
-//           Entry('מגלשות קטנות'),
-//           Entry('מגלשות גדולות'),
-//         ],
-//       ),
-//       Entry('סולם חבלים'),
-//     ],
-//   ),
-// ];
 
 class pgrounds {
   static Map<String, LatLng> getCoords() {
@@ -56,10 +31,6 @@ class pgrounds {
   static bool _litSlide = true;
   static bool _bigSlide = false;
   static cbox() {
-    // bool _litSwing = true;
-    // bool _allSwing = false;
-    // bool _litSlide = true;
-    // bool _bigSlide = false;
     return [
       new Container(
         padding: EdgeInsets.all(20.0),
@@ -291,7 +262,6 @@ class pgrounds {
                         ),
                       );
                     });
-                // print('marker tapped');
               }),
         ));
       }
