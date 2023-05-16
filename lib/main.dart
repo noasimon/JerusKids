@@ -6,6 +6,7 @@ import 'package:latlong/latlong.dart';
 // import 'category.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'playgrounds.dart';
+import 'kindergartens.dart';
 
 void main() {
   runApp(new MaterialApp(
@@ -40,20 +41,21 @@ class TheApp extends StatefulWidget {
 class _TheAppState extends State<TheApp> {
   MapController mapController;
   List<Marker> markers;
+  List<Marker> markers1;
   List<MyItem> _items = new List<MyItem>();
-  bool _zero6 = true;
-  bool _six12 = true;
-  bool _twelve18 = false;
-  bool _eighteenUp = false;
-  bool _one2 = true;
-  bool _three4 = true;
-  bool _five6 = false;
-  bool _seven8 = false;
-  bool _nineUp = false;
-  bool _little = true;
-  bool _oneYear = false;
-  bool _threeYear = false;
-  bool _fiveYear = false;
+  // bool _zero6 = true;
+  // bool _six12 = true;
+  // bool _twelve18 = false;
+  // bool _eighteenUp = false;
+  // bool _one2 = true;
+  // bool _three4 = true;
+  // bool _five6 = false;
+  // bool _seven8 = false;
+  // bool _nineUp = false;
+  // bool _little = true;
+  // bool _oneYear = false;
+  // bool _threeYear = false;
+  // bool _fiveYear = false;
   @override
   void initState() {
     super.initState();
@@ -82,289 +84,7 @@ class _TheAppState extends State<TheApp> {
                 children: (() {
                   switch (category) {
                     case 'גני ילדים':
-                      return [
-                        new Container(
-                          padding: EdgeInsets.all(20.0),
-                          child: Text(
-                            'גילאים',
-                            style: TextStyle(fontSize: 15.0),
-                            textDirection: TextDirection.rtl,
-                            textAlign: TextAlign.right,
-                          ),
-                        ),
-                        StatefulBuilder(builder:
-                            (BuildContext context, StateSetter setState) {
-                          return Center(
-                              child: new Container(
-                            height: 35,
-                            child: new CheckboxListTile(
-                                title: Text(
-                                  'מ- 3 חודשים עד שנה',
-                                  textDirection: TextDirection.rtl,
-                                ),
-                                controlAffinity:
-                                    ListTileControlAffinity.leading,
-                                value: _little,
-                                onChanged: (bool value) {
-                                  setState(() {
-                                    _little = value;
-                                  });
-                                }),
-                          ));
-                        }),
-                        StatefulBuilder(builder:
-                            (BuildContext context, StateSetter setState) {
-                          return Center(
-                              child: new Container(
-                            height: 35,
-                            child: new CheckboxListTile(
-                                title: Text(
-                                  'שנה עד שלוש',
-                                  textDirection: TextDirection.rtl,
-                                ),
-                                value: _oneYear,
-                                controlAffinity:
-                                    ListTileControlAffinity.leading,
-                                onChanged: (bool value) {
-                                  setState(() {
-                                    _oneYear = value;
-                                  });
-                                }),
-                          ));
-                        }),
-                        StatefulBuilder(builder:
-                            (BuildContext context, StateSetter setState) {
-                          return Center(
-                              child: new Container(
-                            height: 35,
-                            child: new CheckboxListTile(
-                                title: Text(
-                                  'שלוש עד חמש',
-                                  textDirection: TextDirection.rtl,
-                                ),
-                                value: _threeYear,
-                                controlAffinity:
-                                    ListTileControlAffinity.leading,
-                                onChanged: (bool value) {
-                                  setState(() {
-                                    _threeYear = value;
-                                  });
-                                }),
-                          ));
-                        }),
-                        StatefulBuilder(builder:
-                            (BuildContext context, StateSetter setState) {
-                          return Center(
-                            // child: new Container(height: 35,
-                            child: new CheckboxListTile(
-                                title: Text(
-                                  'חמש עד שש',
-                                  textDirection: TextDirection.rtl,
-                                ),
-                                value: _fiveYear,
-                                controlAffinity:
-                                    ListTileControlAffinity.leading,
-                                onChanged: (bool value) {
-                                  setState(() {
-                                    _fiveYear = value;
-                                  });
-                                }),
-                          );
-                        }),
-                        new Container(
-                          padding: EdgeInsets.all(20.0),
-                          child: Text(
-                            'מספר ילדים',
-                            style: TextStyle(fontSize: 15.0),
-                            textDirection: TextDirection.rtl,
-                          ),
-                        ),
-                        StatefulBuilder(builder:
-                            (BuildContext context, StateSetter setState) {
-                          return Center(
-                              child: new Container(
-                            height: 35,
-                            child: new CheckboxListTile(
-                                title: Text(
-                                  'עד 6 ילדים',
-                                  textDirection: TextDirection.rtl,
-                                ),
-                                value: _zero6,
-                                controlAffinity:
-                                    ListTileControlAffinity.leading,
-                                onChanged: (bool value) {
-                                  setState(() {
-                                    _zero6 = value;
-                                  });
-                                }),
-                          ));
-                        }),
-                        StatefulBuilder(builder:
-                            (BuildContext context, StateSetter setState) {
-                          return Center(
-                              child: new Container(
-                            height: 35,
-                            child: new CheckboxListTile(
-                                title: Text(
-                                  'מ 6 - 12 ילדים',
-                                  textDirection: TextDirection.rtl,
-                                ),
-                                value: _six12,
-                                controlAffinity:
-                                    ListTileControlAffinity.leading,
-                                onChanged: (bool value) {
-                                  setState(() {
-                                    _six12 = value;
-                                  });
-                                }),
-                          ));
-                        }),
-                        StatefulBuilder(builder:
-                            (BuildContext context, StateSetter setState) {
-                          return Center(
-                              child: new Container(
-                            height: 35,
-                            child: new CheckboxListTile(
-                                title: Text(
-                                  'מ 12 עד 18 ילדים',
-                                  textDirection: TextDirection.rtl,
-                                ),
-                                value: _twelve18,
-                                controlAffinity:
-                                    ListTileControlAffinity.leading,
-                                onChanged: (bool value) {
-                                  setState(() {
-                                    _twelve18 = value;
-                                  });
-                                }),
-                          ));
-                        }),
-                        StatefulBuilder(builder:
-                            (BuildContext context, StateSetter setState) {
-                          return Center(
-                            // child: new Container(height: 35,
-                            child: new CheckboxListTile(
-                                title: Text(
-                                  'מעל 18 ילדים',
-                                  textDirection: TextDirection.rtl,
-                                ),
-                                value: _eighteenUp,
-                                controlAffinity:
-                                    ListTileControlAffinity.leading,
-                                onChanged: (bool value) {
-                                  setState(() {
-                                    _eighteenUp = value;
-                                  });
-                                }),
-                          );
-                        }),
-                        new Container(
-                          padding: EdgeInsets.all(20.0),
-                          child: Text(
-                            'מספר ילדים למטפלת',
-                            style: TextStyle(fontSize: 15.0),
-                            textDirection: TextDirection.rtl,
-                          ),
-                        ),
-                        StatefulBuilder(builder:
-                            (BuildContext context, StateSetter setState) {
-                          return Center(
-                            child: new Container(
-                              height: 35,
-                              child: new CheckboxListTile(
-                                  title: Text(
-                                    '1 - 2',
-                                    textDirection: TextDirection.rtl,
-                                  ),
-                                  value: _one2,
-                                  controlAffinity:
-                                      ListTileControlAffinity.leading,
-                                  onChanged: (bool value) {
-                                    setState(() {
-                                      _one2 = value;
-                                    });
-                                  }),
-                            ),
-                          );
-                        }),
-                        StatefulBuilder(builder:
-                            (BuildContext context, StateSetter setState) {
-                          return Center(
-                              child: new Container(
-                            height: 35,
-                            child: new CheckboxListTile(
-                                title: Text(
-                                  '3 - 4',
-                                  textDirection: TextDirection.rtl,
-                                ),
-                                value: _three4,
-                                controlAffinity:
-                                    ListTileControlAffinity.leading,
-                                onChanged: (bool value) {
-                                  setState(() {
-                                    _three4 = value;
-                                  });
-                                }),
-                          ));
-                        }),
-                        StatefulBuilder(builder:
-                            (BuildContext context, StateSetter setState) {
-                          return Center(
-                              child: new Container(
-                            height: 35,
-                            child: new CheckboxListTile(
-                                title: Text(
-                                  '5 - 6',
-                                  textDirection: TextDirection.rtl,
-                                ),
-                                value: _five6,
-                                controlAffinity:
-                                    ListTileControlAffinity.leading,
-                                onChanged: (bool value) {
-                                  setState(() {
-                                    _five6 = value;
-                                  });
-                                }),
-                          ));
-                        }),
-                        StatefulBuilder(builder:
-                            (BuildContext context, StateSetter setState) {
-                          return Center(
-                              child: new Container(
-                            height: 35,
-                            child: new CheckboxListTile(
-                                title: Text(
-                                  '7 - 8',
-                                  textDirection: TextDirection.rtl,
-                                ),
-                                value: _seven8,
-                                controlAffinity:
-                                    ListTileControlAffinity.leading,
-                                onChanged: (bool value) {
-                                  setState(() {
-                                    _seven8 = value;
-                                  });
-                                }),
-                          ));
-                        }),
-                        StatefulBuilder(builder:
-                            (BuildContext context, StateSetter setState) {
-                          return Center(
-                            // child: new Container(height: 35,
-                            child: new CheckboxListTile(
-                                title: Text(
-                                  '9 +',
-                                  textDirection: TextDirection.rtl,
-                                ),
-                                value: _nineUp,
-                                controlAffinity:
-                                    ListTileControlAffinity.leading,
-                                onChanged: (bool value) {
-                                  setState(() => _nineUp = value);
-                                }),
-                          );
-                        }),
-                      ];
+                      return kindergarts.cbox();
                     case 'גני שעשועים':
                       return pgrounds.cbox();
                     case 'רופאים':
@@ -541,6 +261,7 @@ class _TheAppState extends State<TheApp> {
     }
 
     markers = pgrounds.showMarkers();
+    markers1 = kindergarts.showMarkers();
   }
 
   ExpansionPanel _createitem(MyItem item) {
@@ -636,6 +357,7 @@ class _TheAppState extends State<TheApp> {
                       onPressed: () {
                         setState(() {
                           markers = pgrounds.showMarkers();
+                          markers1 = kindergarts.showMarkers();
                         });
                         Navigator.pop(context);
                       },
@@ -663,6 +385,7 @@ class _TheAppState extends State<TheApp> {
                                   "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                               subdomains: ['a', 'b', 'c']),
                           new MarkerLayerOptions(markers: markers),
+                          new MarkerLayerOptions(markers: markers1),
                         ]))
                   ],
                 ),
