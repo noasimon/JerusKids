@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:flutter_map/plugin_api.dart';
-import 'package:latlong/latlong.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+// import 'package:flutter_map/flutter_map.dart';
+// import 'package:flutter_map/plugin_api.dart';
+// import 'package:latlong/latlong.dart';
 // import 'category.dart';
 
 class pgrounds {
+  // class MapScreen extends StatelessWidget {
+
   static Map<String, LatLng> getCoords() {
     Map<String, LatLng> coords = new Map<String, LatLng>();
 
@@ -30,6 +34,7 @@ class pgrounds {
   static bool _allSwing = false;
   static bool _litSlide = true;
   static bool _bigSlide = false;
+
   static cbox() {
     return [
       new Container(
@@ -150,8 +155,8 @@ class pgrounds {
 
   static Map<String, LatLng> coords = pgrounds.getCoords();
   static showMarkers() {
-    List<Marker> markers;
-    markers = new List<Marker>();
+    List<Marker> markers = [];
+    // markers = new List<Marker>();
     bool pgShimoni = _litSlide;
     bool pgMichvar = _bigSlide | _litSlide | _allSwing | _litSwing;
     bool pgPillbox = _litSlide | _allSwing;
@@ -172,17 +177,27 @@ class pgrounds {
       pgPalmach,
       pgGonenim
     ];
+
+    // Load your custom marker icon image
+    final BitmapDescriptor customMarkerIcon = BitmapDescriptor.fromAssetImage(
+      ImageConfiguration(size: Size(48, 48)),
+      'assets/images/playground_icon.png',
+    ) as BitmapDescriptor;
+
     for (int i = 0; i < coords.length; i++) {
       if (playgrounds[i]) {
-        markers.add(new Marker(
-          width: 80.0,
-          height: 80.0,
-          point: coords.values.elementAt(i),
-          builder: (ctx) => new FlatButton(
-              child: Image.asset('assets/images/playground_icon.png'),
-              onPressed: () {
+        markers.add(
+          new Marker(
+              // width: 80.0,
+              // height: 80.0,
+              position: coords.values.elementAt(i),
+              icon: customMarkerIcon,
+              // builder: (ctx) => new FlatButton(
+              // child: Image.asset('assets/images/playground_icon.png'),
+              onTap: () {
+                var context;
                 showModalBottomSheet(
-                    context: ctx,
+                    context: context,
                     backgroundColor: Colors.transparent,
                     builder: (BuildContext context) {
                       return Container(
@@ -263,7 +278,7 @@ class pgrounds {
                       );
                     });
               }),
-        ));
+        );
       }
     }
     return markers;

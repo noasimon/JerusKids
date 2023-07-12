@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "947524870149",
+    "project_id": "mapastart-c435d",
+    "storage_bucket": "mapastart-c435d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:947524870149:android:3e49ad25be6cd859abfc6c",
+        "android_client_info": {
+          "package_name": "com.example.first_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "947524870149-pme0gtsiuo711da96dbvmlsieklbae5f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "****"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "947524870149-pme0gtsiuo711da96dbvmlsieklbae5f.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "947524870149-iii30gvfkorpduanlsl4tm8of1l01ufa.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.firstApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

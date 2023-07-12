@@ -3,9 +3,11 @@
 // import 'category.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:flutter_map/plugin_api.dart';
-import 'package:latlong/latlong.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+// import 'package:flutter_map/flutter_map.dart';
+// import 'package:flutter_map/plugin_api.dart';
+// import 'package:latlong/latlong.dart';
 // import 'category.dart';
 
 class kindergarts {
@@ -305,8 +307,8 @@ class kindergarts {
 
   static Map<String, LatLng> coords = kindergarts.getCoords();
   static showMarkers() {
-    List<Marker> markers;
-    markers = new List<Marker>();
+    List<Marker> markers = [];
+    // markers = new List<Marker>();
     bool kgSara = _little | _zero6 | _one2;
     bool kgAirin = _little | _zero6 | _one2;
     bool kgEmuna = _little | _eighteenUp | _three4;
@@ -314,13 +316,15 @@ class kindergarts {
     List<bool> playgrounds = [kgSara, kgAirin, kgEmuna];
     for (int i = 0; i < coords.length; i++) {
       if (playgrounds[i]) {
-        markers.add(new Marker(
-          width: 80.0,
-          height: 80.0,
-          point: coords.values.elementAt(i),
-          builder: (ctx) => new FlatButton(
-              child: Image.asset('assets/images/kindergarten_icon.png'),
-              onPressed: () {
+        markers.add(
+          new Marker(
+              // width: 80.0,
+              // height: 80.0,
+              position: coords.values.elementAt(i),
+              // builder: (ctx) => new FlatButton(
+              // child: Image.asset('assets/images/kindergarten_icon.png'),
+              onTap: () {
+                var ctx;
                 showModalBottomSheet(
                     context: ctx,
                     backgroundColor: Colors.transparent,
@@ -403,7 +407,7 @@ class kindergarts {
                       );
                     });
               }),
-        ));
+        );
       }
     }
     return markers;

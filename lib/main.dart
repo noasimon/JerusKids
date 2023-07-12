@@ -1,399 +1,328 @@
 import 'package:flutter/material.dart';
-// import 'dart:async';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:flutter_map/plugin_api.dart';
-import 'package:latlong/latlong.dart';
-// import 'category.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'playgrounds.dart';
-import 'kindergartens.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 void main() {
-  runApp(new MaterialApp(
-    home: new TheApp(),
-    debugShowCheckedModeBanner: false,
-    localizationsDelegates: [
-      GlobalCupertinoLocalizations.delegate,
-      GlobalMaterialLocalizations.delegate,
-      GlobalWidgetsLocalizations.delegate,
-    ],
-    supportedLocales: [
-      Locale("he", "IL"),
-    ],
-    locale: Locale("he", "IL"),
-  ));
+  runApp(MyApp());
 }
 
-class MyItem {
-  bool isExpanded;
-  final String header;
-  final Widget body;
-  final Image image;
-
-  MyItem(this.isExpanded, this.header, this.body, this.image);
-}
-
-class TheApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   @override
-  _TheAppState createState() => new _TheAppState();
-}
-
-class _TheAppState extends State<TheApp> {
-  MapController mapController;
-  List<Marker> markers;
-  List<Marker> markers1;
-  List<MyItem> _items = new List<MyItem>();
-  // bool _zero6 = true;
-  // bool _six12 = true;
-  // bool _twelve18 = false;
-  // bool _eighteenUp = false;
-  // bool _one2 = true;
-  // bool _three4 = true;
-  // bool _five6 = false;
-  // bool _seven8 = false;
-  // bool _nineUp = false;
-  // bool _little = true;
-  // bool _oneYear = false;
-  // bool _threeYear = false;
-  // bool _fiveYear = false;
-  @override
-  void initState() {
-    super.initState();
-    mapController = new MapController();
-    for (String category in [
-      'גני ילדים',
-      'גני שעשועים',
-      'רופאים',
-      'טיפת חלב',
-      'חנויות',
-      'בייביסיטר',
-      'יעוץ שינה',
-      'יעוץ הנקה',
-      'אירועים'
-    ]) {
-      _items.add(
-        new MyItem(
-            false,
-            category,
-            new Container(
-              padding: new EdgeInsets.all(10.0),
-              alignment: Alignment.centerRight,
-              child: new Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: (() {
-                  switch (category) {
-                    case 'גני ילדים':
-                      return kindergarts.cbox();
-                    case 'גני שעשועים':
-                      return pgrounds.cbox();
-                    case 'רופאים':
-                      return [
-                        new Container(
-                          padding: EdgeInsets.all(20.0),
-                          child: Text(
-                            'מתקנים',
-                            style: TextStyle(fontSize: 15.0),
-                            textDirection: TextDirection.rtl,
-                            textAlign: TextAlign.right,
-                          ),
-                        ),
-                        StatefulBuilder(builder:
-                            (BuildContext context, StateSetter setState) {
-                          return Center(
-                              child: new Container(
-                                  height: 35, child: Text('רופאים')));
-                        })
-                      ];
-                    case 'טיפת חלב':
-                      return [
-                        new Container(
-                          padding: EdgeInsets.all(20.0),
-                          child: Text(
-                            'מתקנים',
-                            style: TextStyle(fontSize: 15.0),
-                            textDirection: TextDirection.rtl,
-                            textAlign: TextAlign.right,
-                          ),
-                        ),
-                        StatefulBuilder(builder:
-                            (BuildContext context, StateSetter setState) {
-                          return Center(
-                              child: new Container(
-                                  height: 35, child: Text('טיפת חלב')));
-                        })
-                      ];
-                    case 'חנויות':
-                      return [
-                        new Container(
-                          padding: EdgeInsets.all(20.0),
-                          child: Text(
-                            'מתקנים',
-                            style: TextStyle(fontSize: 15.0),
-                            textDirection: TextDirection.rtl,
-                            textAlign: TextAlign.right,
-                          ),
-                        ),
-                        StatefulBuilder(builder:
-                            (BuildContext context, StateSetter setState) {
-                          return Center(
-                              child: new Container(
-                                  height: 35, child: Text('חנויות')));
-                        })
-                      ];
-                    case 'בייביסיטר':
-                      return [
-                        new Container(
-                          padding: EdgeInsets.all(20.0),
-                          child: Text(
-                            'מתקנים',
-                            style: TextStyle(fontSize: 15.0),
-                            textDirection: TextDirection.rtl,
-                            textAlign: TextAlign.right,
-                          ),
-                        ),
-                        StatefulBuilder(builder:
-                            (BuildContext context, StateSetter setState) {
-                          return Center(
-                              child: new Container(
-                                  height: 35, child: Text('בייביסיטר')));
-                        })
-                      ];
-                    case 'יעוץ שינה':
-                      return [
-                        new Container(
-                          padding: EdgeInsets.all(20.0),
-                          child: Text(
-                            'מתקנים',
-                            style: TextStyle(fontSize: 15.0),
-                            textDirection: TextDirection.rtl,
-                            textAlign: TextAlign.right,
-                          ),
-                        ),
-                        StatefulBuilder(builder:
-                            (BuildContext context, StateSetter setState) {
-                          return Center(
-                              child: new Container(
-                                  height: 35, child: Text('יעוץ שינה')));
-                        })
-                      ];
-                    case 'יעוץ הנקה':
-                      return [
-                        new Container(
-                          padding: EdgeInsets.all(20.0),
-                          child: Text(
-                            'מתקנים',
-                            style: TextStyle(fontSize: 15.0),
-                            textDirection: TextDirection.rtl,
-                            textAlign: TextAlign.right,
-                          ),
-                        ),
-                        StatefulBuilder(builder:
-                            (BuildContext context, StateSetter setState) {
-                          return Center(
-                              child: new Container(
-                                  height: 35, child: Text('יעוץ הנקה')));
-                        })
-                      ];
-                    case 'אירועים':
-                      return [
-                        new Container(
-                          padding: EdgeInsets.all(20.0),
-                          child: Text(
-                            'מתקנים',
-                            style: TextStyle(fontSize: 15.0),
-                            textDirection: TextDirection.rtl,
-                            textAlign: TextAlign.right,
-                          ),
-                        ),
-                        StatefulBuilder(builder:
-                            (BuildContext context, StateSetter setState) {
-                          return Center(
-                              child: new Container(
-                                  height: 35, child: Text('אירועים')));
-                        })
-                      ];
-                  }
-                }()),
-              ),
-            ),
-            (() {
-              switch (category) {
-                case 'גני ילדים':
-                  return Image(
-                    image: AssetImage('assets/images/kindergarten_circle.png'),
-                  );
-                case 'גני שעשועים':
-                  return Image(
-                    image: AssetImage('assets/images/playground_circle.png'),
-                  );
-                case 'רופאים':
-                  return Image(
-                    image: AssetImage('assets/images/doctor_circle.png'),
-                  );
-                case 'חנויות':
-                  return Image(
-                    image: AssetImage('assets/images/shops_circle.png'),
-                  );
-                case 'טיפת חלב':
-                  return Image(
-                    image: AssetImage('assets/images/milk_drop_circle.png'),
-                  );
-                case 'יעוץ שינה':
-                  return Image(
-                    image: AssetImage('assets/images/sleep_circle.png'),
-                  );
-                case 'יעוץ הנקה':
-                  return Image(
-                    image: AssetImage('assets/images/breathfeed_circle.png'),
-                  );
-                case 'בייביסיטר':
-                  return Image(
-                    image: AssetImage('assets/images/babysitter_circle.png'),
-                  );
-                case 'אירועים':
-                  return Image(
-                    image: AssetImage('assets/images/calender_circle.png'),
-                  );
-              }
-            }())),
-      );
-    }
-
-    markers = pgrounds.showMarkers();
-    markers1 = kindergarts.showMarkers();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Map App',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: MapScreen(),
+    );
   }
+}
 
-  ExpansionPanel _createitem(MyItem item) {
-    return new ExpansionPanel(
-        headerBuilder: (
-          BuildContext context,
-          bool isExpanded,
-        ) {
-          return new ListTile(
-            leading: item.image,
-            // leading: Icon(Icons.arrow_back_ios_rounded),
-            // padding: new EdgeInsets.all(5.0),
-            title: new Text(
-              item.header,
-              style: TextStyle(fontSize: 20.0),
-              textDirection: TextDirection.rtl,
-              textAlign: TextAlign.right,
-            ),
-            // alignment: Alignment.centerRight,
-          );
-        },
-        body: item.body,
-        isExpanded: item.isExpanded);
+class MapScreen extends StatefulWidget {
+  @override
+  _MapScreenState createState() => _MapScreenState();
+}
+
+class _MapScreenState extends State<MapScreen> {
+  GoogleMapController? _mapController;
+  Set<Marker> _markers = {};
+
+  // Filter options
+  String? selectedField;
+  String? selectedSwingOption;
+  String? selectedSlideOption;
+  String? selectedChildrenOption;
+  String? selectedCaregiversOption;
+  String? selectedAgesOption;
+
+  // Marker details
+  String? selectedMarkerTitle;
+  String? selectedMarkerDescription;
+  String? selectedMarkerImage;
+
+  @override
+  void dispose() {
+    _mapController?.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      body: Stack(
-        children: <Widget>[
-          Scaffold(
-            extendBodyBehindAppBar: true,
-            backgroundColor: Colors.transparent,
-            appBar: new AppBar(
-              backgroundColor: Colors.transparent,
-              title: new Container(
-                height: 35,
-                child: new TextField(
-                  textAlignVertical: TextAlignVertical.center,
-                  decoration: new InputDecoration(
-                      hintText: 'חפשי בשכונה',
-                      contentPadding: EdgeInsets.all(0.0),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(
-                          const Radius.circular(30.0),
-                        ),
-                        borderSide: BorderSide(
-                          color: Color(0xFFC1AAF2),
-                        ),
-                      ),
-                      prefixIcon: Icon(
-                        Icons.search,
-                        color: Color(0xFFC1AAF2),
-                      ),
-                      // border: new OutlineInputBorder(
-                      // borderRadius: const BorderRadius.all(
-                      // const Radius.circular(30.0),
-                      // ),
-                      // borderSide: const BorderSide(color:  Color(0xFFC1AAF2),)
-                      // ),
-                      filled: true,
-                      hintStyle: new TextStyle(
-                          fontSize: 12.0, color: Colors.grey[600]),
-                      fillColor: Colors.white70),
-                ),
-              ),
-              elevation: 0.0,
-              leading: Builder(
-                builder: (context) => IconButton(
-                  icon: Image(
-                    image: AssetImage('assets/images/round_icon_button.png'),
-                  ),
-                  onPressed: () => Scaffold.of(context).openDrawer(),
-                ),
-              ),
-            ),
-            drawer: new Drawer(
-              child: new Container(
-                padding: new EdgeInsets.all(2.0),
-                child: new ListView(
-                  children: <Widget>[
-                    // DrawerHeader(child: Text('נקודות עניין')),
-                    new ExpansionPanelList(
-                      expansionCallback: (int index, bool isExpanded) {
-                        setState(() {
-                          _items[index].isExpanded = !_items[index].isExpanded;
-                        });
-                      },
-                      children: _items.map(_createitem).toList(),
-                    ),
-
-                    new FlatButton(
-                      onPressed: () {
-                        setState(() {
-                          markers = pgrounds.showMarkers();
-                          markers1 = kindergarts.showMarkers();
-                        });
-                        Navigator.pop(context);
-                      },
-                      child: new Text('סגור'),
-                    ),
-                    // new Category()
-                  ],
-                ),
-              ),
-            ),
-            body: new Container(
-              padding: new EdgeInsets.all(0.0),
-              child: new Center(
-                child: new Column(
-                  children: <Widget>[
-                    new Flexible(
-                        child: new FlutterMap(
-                            mapController: mapController,
-                            options: new MapOptions(
-                                center: new LatLng(31.76334, 35.20203),
-                                zoom: 15.0),
-                            layers: [
-                          new TileLayerOptions(
-                              urlTemplate:
-                                  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                              subdomains: ['a', 'b', 'c']),
-                          new MarkerLayerOptions(markers: markers),
-                          new MarkerLayerOptions(markers: markers1),
-                        ]))
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Map App'),
       ),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            ListTile(
+              title: Text('Kindergartens'),
+              onTap: () {
+                setState(() {
+                  selectedField = 'kindergartens';
+                });
+                _showFiltersDialog();
+              },
+            ),
+            ListTile(
+              title: Text('Playgrounds'),
+              onTap: () {
+                setState(() {
+                  selectedField = 'playgrounds';
+                });
+                _showFiltersDialog();
+              },
+            ),
+          ],
+        ),
+      ),
+      body: GoogleMap(
+        onMapCreated: (GoogleMapController controller) {
+          _mapController = controller;
+        },
+        markers: _markers,
+        initialCameraPosition: CameraPosition(
+          target: LatLng(37.42796133580664, -122.085749655962),
+          zoom: 15,
+        ),
+      ),
+    );
+  }
+
+  Future<void> _showFiltersDialog() async {
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Filters'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (selectedField == 'kindergartens') ...[
+                Text('Number of Children:'),
+                DropdownButton<String>(
+                  value: selectedChildrenOption,
+                  items: [
+                    DropdownMenuItem<String>(
+                      value: '1-6',
+                      child: Text('1-6'),
+                    ),
+                    DropdownMenuItem<String>(
+                      value: '6-12',
+                      child: Text('6-12'),
+                    ),
+                    DropdownMenuItem<String>(
+                      value: '12-18',
+                      child: Text('12-18'),
+                    ),
+                    DropdownMenuItem<String>(
+                      value: '18+',
+                      child: Text('18+'),
+                    ),
+                  ],
+                  onChanged: (value) {
+                    setState(() {
+                      selectedChildrenOption = value;
+                    });
+                  },
+                ),
+                Text('Number of Caregivers:'),
+                DropdownButton<String>(
+                  value: selectedCaregiversOption,
+                  items: [
+                    DropdownMenuItem<String>(
+                      value: '1',
+                      child: Text('1'),
+                    ),
+                    DropdownMenuItem<String>(
+                      value: '2',
+                      child: Text('2'),
+                    ),
+                    DropdownMenuItem<String>(
+                      value: '3',
+                      child: Text('3'),
+                    ),
+                    DropdownMenuItem<String>(
+                      value: '4+',
+                      child: Text('4+'),
+                    ),
+                  ],
+                  onChanged: (value) {
+                    setState(() {
+                      selectedCaregiversOption = value;
+                    });
+                  },
+                ),
+                Text('Ages:'),
+                DropdownButton<String>(
+                  value: selectedAgesOption,
+                  items: [
+                    DropdownMenuItem<String>(
+                      value: '3 months - 1 year',
+                      child: Text('3 months - 1 year'),
+                    ),
+                    DropdownMenuItem<String>(
+                      value: '1-2 years',
+                      child: Text('1-2 years'),
+                    ),
+                    DropdownMenuItem<String>(
+                      value: '2-3 years',
+                      child: Text('2-3 years'),
+                    ),
+                  ],
+                  onChanged: (value) {
+                    setState(() {
+                      selectedAgesOption = value;
+                    });
+                  },
+                ),
+              ],
+              if (selectedField == 'playgrounds') ...[
+                Text('Swings:'),
+                DropdownButton<String>(
+                  value: selectedSwingOption,
+                  items: [
+                    DropdownMenuItem<String>(
+                      value: 'safety little kids swing',
+                      child: Text('Safety Little Kids Swing'),
+                    ),
+                    DropdownMenuItem<String>(
+                      value: 'big kids swing',
+                      child: Text('Big Kids Swing'),
+                    ),
+                  ],
+                  onChanged: (value) {
+                    setState(() {
+                      selectedSwingOption = value;
+                    });
+                  },
+                ),
+                Text('Slides:'),
+                DropdownButton<String>(
+                  value: selectedSlideOption,
+                  items: [
+                    DropdownMenuItem<String>(
+                      value: 'small slide',
+                      child: Text('Small Slide'),
+                    ),
+                    DropdownMenuItem<String>(
+                      value: 'big slide',
+                      child: Text('Big Slide'),
+                    ),
+                  ],
+                  onChanged: (value) {
+                    setState(() {
+                      selectedSlideOption = value;
+                    });
+                  },
+                ),
+              ],
+            ],
+          ),
+          actions: [
+            TextButton(
+              child: Text('Apply'),
+              onPressed: () {
+                _applyFilters();
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _applyFilters() {
+    // Here, you can fetch the relevant markers from a database based on the selected filters
+    // For this example, let's assume we have some dummy data
+
+    Set<Marker> newMarkers = {};
+
+    // Dummy markers for testing
+    if (selectedField == 'kindergartens') {
+      newMarkers.add(
+        Marker(
+          markerId: MarkerId('1'),
+          position: LatLng(37.42796133580664, -122.085749655962),
+          onTap: () {
+            _showMarkerDetails('Kindergarten 1', 'Description 1',
+                'assets/images/gMordechay1.jpg');
+          },
+        ),
+      );
+      newMarkers.add(
+        Marker(
+          markerId: MarkerId('2'),
+          position: LatLng(37.4219999, -122.0840575),
+          onTap: () {
+            _showMarkerDetails('Kindergarten 2', 'Description 2',
+                'assets/images/gMordechay1.jpg');
+          },
+        ),
+      );
+    } else if (selectedField == 'playgrounds') {
+      newMarkers.add(
+        Marker(
+          markerId: MarkerId('3'),
+          position: LatLng(37.4219999, -122.0820575),
+          onTap: () {
+            _showMarkerDetails('Playground 1', 'Description 3',
+                'assets/images/gMordechay1.jpg');
+          },
+        ),
+      );
+      newMarkers.add(
+        Marker(
+          markerId: MarkerId('4'),
+          position: LatLng(37.4239999, -122.0830575),
+          onTap: () {
+            _showMarkerDetails('Playground 2', 'Description 4',
+                'assets/images/gMordechay1.jpg');
+          },
+        ),
+      );
+    }
+
+    setState(() {
+      _markers = newMarkers;
+    });
+  }
+
+  void _showMarkerDetails(String title, String description, String image) {
+    setState(() {
+      selectedMarkerTitle = title;
+      selectedMarkerDescription = description;
+      selectedMarkerImage = image;
+    });
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(selectedMarkerTitle!),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(selectedMarkerDescription!),
+              SizedBox(height: 8.0),
+              Image.asset(
+                selectedMarkerImage!,
+                width: 100,
+                height: 100,
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              child: Text('Close'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
